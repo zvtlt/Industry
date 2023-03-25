@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz.thymeleaf/layout"
+      layout:decorate="@{header}">
+<!--      xmlns="http://www.w3.org/1999/xhtml" -->
+<head>
+    <meta charset="UTF-8"/>
+    <title>Industry demo</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/myStyle.css"
+          th:href="@{/css/myStyle.css}"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body class="col-md-offset-1" style="background-image:
+        url(../images/star-bg.jpg);"
+      layout:fragment="content" onload="updateOutput(); showhide(); initCheckBox();">
+<div class="spacer">
+    <br>
+    <div>
+        <form th:action="@{/}">
+                <label style="color:#FFFFFF">Blueprint name : </label>
+                <input style="color: #FFFFFF; background-color: #000000; border: 1px solid #FFFFFF"
+                       type="text" id="searched" name="searched" th:value="${itemSearched}"/>
+
+                <button style="color:#FFFFFF; background-color: #000000;" id="search" type="submit">&nbsp;&nbsp;Search</button>
+            <br/>
+            <br/>
+            <p style="color:#FFFFFF">
+                <input type="checkbox" id="subComp" name="subComp" onchange="this.form.submit()"/>
+            Display Sub-Components &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Blueprint TE : -
+                <input style="background-color: #000000; border: 1px solid #FFFFFF" id="te" name="te" type="number" onchange="this.form.submit()"
+                       min="0" max="20" step="2" th:value="${te}">
+            % &nbsp;&nbsp;&nbsp;ME : -
+            <input style="background-color: #000000; border: 1px solid #FFFFFF" id="me" name="me" type="number" onchange="this.form.submit()"
+                   min="0" max="10" step="1" th:value="${me}">
+            <br/>
+            </p>
+            <hr>
+                <select style="color: #FFFFFF; background-color: #0000;" id="myselect" name="name"
+                        th:value="${itemName}" onchange="this.form.submit()">
+                    <option style="color: #FFFFFF; background-color: #000000;" th:text="${itemName}"></option>
+                    <option style="color: #FFFFFF; background-color: #000000;"
+                            th:each="name : ${itemsName}"
+                            th:text="${name}"></option>
+                </select>
+            <hr id="selecthr">
+        </form>
+
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            function showhide(){
+                let combobox = document.getElementById("myselect");
+                let selecthr = document.getElementById("selecthr");
+                let itemSearched = $("#searched").val();
+
+                if (itemSearched!="") {
+                    combobox.removeAttribute("hidden");
+                    selecthr.removeAttribute("hidden");
+                } else {
+                    combobox.setAttribute("hidden", "hidden");
+                    selecthr.setAttribute("hidden", "hidden");
+                }
+            }
+            function initCheckBox(){
+                let checkBox = document.getElementById("subComp");
+                let subComp =   /*[[${subComp}]]*/ 'default';
+
+                if (subComp!="off") {
+                    checkBox.setAttribute("checked", "checked");
+                } else {
+                    checkBox.removeAttribute("checked");
+                }
+
+            }
+
+            function updateOutput() {
+                let subComp =   /*[[${subComp}]]*/ 'default';
+
+                if(subComp!="on") {
+                    $.post("out").done(function (fragment) {
+                        console.log(fragment);
+                        $("#output").replaceWith(fragment);
+                    });
+                }else{
+                    $.post("outsub").done(function (fragment) {
+                        console.log(fragment);
+                        $("#outputSub").replaceWith(fragment);
+                    });
+                }
+            }
+            /*]]>*/
+        </script>
+    </div>
+
+    <div id="output">
+
+    </div>
+    <div id="outputSub">
+
+    </div>
+</div>
+
+<div>
+    // BOTTOM OF PAGE
+</div>
+
+
+
+</body>
+</html>

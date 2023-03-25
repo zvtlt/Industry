@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org" >
+<head>
+    <meta charset="UTF-8"/>
+    <title>Industry demo</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="../../static/css/myStyle.css"
+          th:href="@{/css/myStyle.css}"/>
+
+</head>
+<body>
+<br>
+<h1>Test</h1>
+<br>
+
+<div class="container spacer">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>typeID</th>
+            <th>groupID</th>
+            <th>typeName</th>
+            <th>description</th>
+            <th>mass</th>
+            <th>volume</th>
+            <th>capacity</th>
+            <th>portionSize</th>
+            <th>raceID</th>
+            <th>basePrice</th>
+            <th>published</th>
+            <th>marketGroupID</th>
+            <th>iconID</th>
+            <th>soundID</th>
+            <th>graphicID</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="i:${invtypesForm}">
+            <td th:text="${i.typeID}"></td>
+            <td th:text="${i.groupID}"></td>
+            <td th:text="${i.typeName}"></td>
+            <td th:text="${i.description}"></td>
+            <td th:text="${i.mass}"></td>
+            <td th:text="${i.volume}"></td>
+            <td th:text="${i.capacity}"></td>
+            <td th:text="${i.portionSize}"></td>
+            <td th:text="${i.raceID}"></td>
+            <td th:text="${i.basePrice}"></td>
+            <td th:text="${i.published}"></td>
+            <td th:text="${i.marketGroupID}"></td>
+            <td th:text="${i.iconID}"></td>
+            <td th:text="${i.soundID}"></td>
+            <td th:text="${i.graphicID}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

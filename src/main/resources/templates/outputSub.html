@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Industry demo</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/myStyle.css"
+          th:href="@{/css/myStyle.css}"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+
+<div th:fragment="outputSub_frag">
+    <div id="outputSub" class="container spacer" hidden>
+        <h1 style="color:#FFFFFF"><td th:text="${name}"></td></h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="color:#FFFFFF" class="text-right" width="40">iconFile</th>
+                <th style="color:#FFFFFF">typeName</th>
+                <th style="color:#FFFFFF" class="text-right">quantity</th>
+                <th style="color:#FFFFFF" class="text-right">volume</th>
+                <th style="color:#FFFFFF" class="text-right">basePrice</th>
+                <th style="color:#FFFFFF" class="text-right">multPrice</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="i:${itInfo}">
+                <td class="text-right" width="40">
+                    <img th:src="@{getImage(iconFile=${i.iconFile})}" width="32" height="32"/>
+                </td>
+                <td style="color:#FFFFFF" th:text="${i.typeName}"></td>
+                <td style="color:#FFFFFF" class="text-right" th:text="${i.quantity}"></td>
+                <td style="color:#FFFFFF" class="text-right">
+                    <span th:text="${i.volumeString}" th:remove="tag"></span>
+                    <small th:text=" m" ></small>
+                    <sup>3</sup>
+                </td>
+                <td style="color:#FFFFFF" class="text-right">
+                    <span th:text="${i.basePriceString}" th:remove="tag"></span>
+                    <small th:text=" ISK" ></small>
+                </td>
+                <td style="color:#FFFFFF" class="text-right">
+                    <span th:text="${i.multPriceString}" th:remove="tag"></span>
+                    <small th:text=" ISK" ></small>
+                </td>
+            </tr>
+            </tbody>
+            <tbody>
+            <tr>
+                <td></td><td></td><td></td><td></td><td></td>
+                <td style="color:#FFFFFF" class="text-right">
+                    <span th:text="${totalString}" th:remove="tag"></span>
+                    <small th:text=" ISK" ></small>
+                </td>
+            </tr>
+            </tbody>
+            <img src onerror='showhide()'>
+        </table>
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            function showhide() {
+                let output = document.getElementById("outputSub");
+                let itemName = /*[[${name}]]*/ 'default';
+
+                if (itemName!="Please select a Blueprint") {
+                    output.removeAttribute("hidden");
+                } else {
+                    output.setAttribute("hidden", "hidden");
+                }
+            }
+            /*]]>*/
+        </script>
+    </div>
+</div>
+</body>
+</html>
